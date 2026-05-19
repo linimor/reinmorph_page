@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ReinMorph3D project page">
+    <title>ReinMorph3D: Stable 3D Morphing via Relation-Aware Attention and Motion Coherence</title>
+    <link rel="stylesheet" href="assets/site.css">
+    <script defer src="assets/site.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">ReinMorph3D</a>
+      <nav aria-label="Primary navigation">
+        <a href="#results">Pipeline</a>
+        <a href="#method">Method</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <h1 class="gradient-text">ReinMorph3D</h1>
+          <p class="subtitle">Stable 3D Morphing via Relation-Aware Attention and Motion Coherence</p>
+
+          <div class="authors" aria-label="Authors">
+            <span>Xingtao Wang</span>
+            <span><a href="https://linimor.github.io/">Linmao Li</a></span>
+            <span><a href="https://liwrui.github.io/">WenRui Li</a></span>
+          </div>
+
+          <div class="affiliations" aria-label="Affiliations">
+            <span>Harbin Institute of Technology</span>
+          </div>
+
+        <div class="links">
+            <a href="assets/main.pdf">Paper</a>
+            <a class="is-disabled" href="#" aria-disabled="true">Code Soon</a>
+            <a class="is-disabled" href="#" aria-disabled="true">Demo Soon</a>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="section preview-section reveal" aria-label="Interactive ReinMorph3D morphing preview">
+        <img class="preview-poster" src="assets/preview_spin.gif" alt="" aria-hidden="true">
+        <button class="preview-start" type="button" aria-label="Load interactive 3D preview">Load 3D Preview</button>
+        <iframe
+          class="morph-preview"
+          data-src="preview.html"
+          title="Interactive ReinMorph3D 3D morphing preview"
+          loading="lazy"
+        ></iframe>
+      </section>
+
+      <section class="section abstract-panel reveal">
+        <h2>Abstract</h2>
+        <p>
+          Recent 3D morphing methods employ frozen 3D generative models and synthesize intermediate
+          shapes by fusing source-target conditions during sampling. However, generating semantically
+          consistent and spatially smooth deformations remains challenging, particularly in
+          cross-category scenarios. ReinMorph3D addresses attention-level correspondence collapse and
+          token-wise fusion inconsistency through Competition-Gated Attention Rectification and
+          Motion-Coherent Residual Fusion, producing geometrically stable, temporally smooth, and
+          semantically coherent morphing sequences without retraining the backbone model.
+        </p>
+      </section>
+
+      <section id="results" class="section reveal">
+        <div class="section-heading">
+          <h2 class="gradient-text">Pipeline</h2>
+          <p>Overall framework of ReinMorph3D.</p>
+        </div>
+
+        <div class="figure-frame wide">
+          <img class="pipeline-image" src="assets/pipeline.png" alt="Overall pipeline of ReinMorph3D">
+        </div>
+
+        <div class="section-heading video-heading">
+          <h2 class="gradient-text">Video Results</h2>
+          <p>Reference videos showing the current failure case and the stabilized result produced by ReinMorph3D.</p>
+        </div>
+
+        <div class="video-grid" aria-label="Video result comparison">
+          <article class="video-card">
+            <div class="subject-pair auto-display" aria-label="First two current challenge subjects">
+              <div class="video-crop" style="--crop-index: 0; --crop-total: 6; --crop-step: 16.6666667%;">
+                <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/current_challenge.mp4"></video>
+              </div>
+              <div class="video-crop" style="--crop-index: 1; --crop-total: 6; --crop-step: 16.6666667%;">
+                <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/current_challenge.mp4"></video>
+              </div>
+            </div>
+            <div class="video-copy">
+              <h3>Current Challenge</h3>
+              <p>Unstable morphing may introduce abrupt geometry changes and locally inconsistent intermediate states.</p>
+            </div>
+          </article>
+          <article class="video-card">
+            <div class="subject-pair auto-display" aria-label="First two ReinMorph3D result subjects">
+              <div class="video-crop" style="--crop-index: 0; --crop-total: 6; --crop-step: 16.6666667%;">
+                <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/reinmorph3d_result.mp4"></video>
+              </div>
+              <div class="video-crop" style="--crop-index: 1; --crop-total: 6; --crop-step: 16.6666667%;">
+                <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/reinmorph3d_result.mp4"></video>
+              </div>
+            </div>
+            <div class="video-copy">
+              <h3>ReinMorph3D Result</h3>
+              <p>Our method improves morphing stability and produces a smoother, more coherent transition.</p>
+            </div>
+          </article>
+          <article class="video-card video-card-wide">
+            <div class="video-stage">
+              <video controls playsinline loop muted preload="auto" data-playback-rate="0.25" src="assets/videos/morphing_red_tree+Staff.mp4"></video>
+              <span class="video-badge">Smooth Deformation</span>
+            </div>
+            <div class="video-copy">
+              <h3>Continuous Deformation</h3>
+              <p>A slow-motion example highlights smooth geometry evolution and stable intermediate states.</p>
+            </div>
+          </article>
+          <article class="video-card video-card-wide">
+            <div class="video-stage">
+              <video controls playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/morphing_hudie+bee.mp4"></video>
+              <span class="video-badge">Same-category</span>
+            </div>
+            <div class="video-copy">
+              <h3>Same-Category Morphing</h3>
+              <p>ReinMorph3D remains competitive in closer semantic transitions while preserving smooth motion.</p>
+            </div>
+          </article>
+          <article class="video-card video-card-wide">
+            <div class="ablation-videos ablation-unit" aria-label="Godzilla to bee ablation comparison">
+              <div class="ablation-item">
+                <div class="video-stage">
+                  <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/morphing_Godzilla+bee_base.mp4"></video>
+                  <span class="video-badge">Base</span>
+                </div>
+              </div>
+              <div class="ablation-item">
+                <div class="video-stage">
+                  <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/morphing_Godzilla+bee.mp4"></video>
+                  <span class="video-badge">w/o MCRF</span>
+                </div>
+              </div>
+              <div class="ablation-item">
+                <div class="video-stage">
+                  <video playsinline loop muted preload="auto" data-playback-rate="0.5" src="assets/videos/morphing_Godzilla+bee_ot_modify_gate.mp4"></video>
+                  <span class="video-badge">CGAR + MCRF</span>
+                </div>
+              </div>
+            </div>
+            <div class="video-copy">
+              <h3>Godzilla-to-Bee Ablation</h3>
+              <p>Putting the three variants side by side makes the effect of motion-coherent residual fusion easier to compare.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="method" class="section reveal">
+        <div class="section-heading">
+          <h2 class="gradient-text">Methodology</h2>
+          <p>Three core ideas behind the stabilized SLAT morphing process.</p>
+        </div>
+
+        <div class="method-list method-list-wide">
+          <article>
+            <span>01</span>
+            <h3>Post-Attention Fusion in Query Space</h3>
+            <p>
+              Source and target memories are retrieved separately by the current latent queries, then
+              fused after attention. This avoids directly blending unmatched K/V tokens at their
+              original indices and makes the fusion happen in a query-aligned semantic space.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Competition-Gated Attention Rectification</h3>
+            <p>
+              CGAR detects over-competitive key regions and demotes weak, ambiguous query-key
+              matches while protecting confident positive responses. A reliability gate then
+              suppresses low-confidence attention outputs to reduce accumulated correspondence
+              collapse during repeated sampling.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Motion-Coherent Residual Fusion</h3>
+            <p>
+              MCRF estimates an OT-guided motion prior from anchor-level source-target
+              correspondence and propagates it to token-level residual fusion. Local morphing updates
+              are therefore coordinated by a global deformation trend instead of evolving
+              independently.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="experiments" class="section reveal">
+        <div class="section-heading">
+          <h2 class="gradient-text">Experiments</h2>
+          <p>Current quantitative table from the manuscript draft.</p>
+        </div>
+
+        <div class="metrics">
+          <article>
+            <span>FID ↓</span>
+            <strong>97.17</strong>
+            <p>Generation quality</p>
+          </article>
+          <article>
+            <span>PPL ↓</span>
+            <strong>1.22</strong>
+            <p>Perceptual path smoothness</p>
+          </article>
+          <article>
+            <span>PDV ↓</span>
+            <strong>0.000258</strong>
+            <p>Deformation stability</p>
+          </article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>FID ↓</th>
+                <th>PPL ↓</th>
+                <th>PDV ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MorphAny3D</td>
+                <td>111.95</td>
+                <td>2.47</td>
+                <td>0.000600</td>
+              </tr>
+              <tr>
+                <td>w/o CGAR</td>
+                <td>111.47</td>
+                <td>1.571</td>
+                <td>0.001643</td>
+              </tr>
+              <tr>
+                <td>w/o MCRF</td>
+                <td>98.62</td>
+                <td>1.353</td>
+                <td>0.000282</td>
+              </tr>
+              <tr class="highlight-row">
+                <td>ReinMorph3D</td>
+                <td>97.17</td>
+                <td>1.220</td>
+                <td>0.000258</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <h2 class="gradient-text">Analysis</h2>
+          <p>Additional diagnostic figures prepared from the current paper assets.</p>
+        </div>
+
+        <div class="analysis-grid">
+          <article>
+            <img src="assets/attn_sink_ablation.svg" alt="Attention sink analysis">
+            <h3>Attention Sink Analysis</h3>
+          </article>
+          <article>
+            <img src="assets/forced_rotation_loss.svg" alt="Forced rotation loss analysis">
+            <h3>Forced Rotation Analysis</h3>
+          </article>
+          <article>
+            <img src="assets/hyperparam_overlay_cartoon_adjusted.svg" alt="Hyperparameter sensitivity analysis">
+            <h3>Hyperparameter Sensitivity</h3>
+          </article>
+        </div>
+      </section>
+
+      <section id="citation" class="section citation reveal">
+        <h2 class="gradient-text">Citation</h2>
+        <p>If you find this project useful, please cite:</p>
+        <pre><code>@article{reinmorph3d2026,
+  title  = {ReinMorph3D: Stable 3D Morphing via Relation-Aware Attention and Motion Coherence},
+  author = {Wang, Xingtao and Li, Linmao and Li, WenRui},
+  journal = {IEEE Transactions on Image Processing},
+  year   = {2026}
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>Website scaffold inspired by modern 3D-generation project pages. Replace author names, links, videos, and citation when ready.</p>
+    </footer>
+  </body>
+</html>
+
